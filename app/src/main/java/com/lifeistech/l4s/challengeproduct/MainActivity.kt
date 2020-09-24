@@ -2,15 +2,15 @@ package com.lifeistech.l4s.challengeproduct
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.realm.Realm
+import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val realm: Realm = Realm.getDefaultInstance()
-    private lateint var mContext: Context;
+    private lateinit var mContext: Context;
 //    val bookData: List<BookData> = listOf()
 
     //onCreateアプリを開いたとき　onResume遷移から戻ってきたとき
@@ -37,8 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         val bookList: RealmResults<Book> = readAll()
 
-        val adapter = RecyclerViewAdapter(this, true, object : BookAdapter.ListListener{
-            override fun onClickRow(view: View, rowModel: Book) {
+
+        val adapter = RecyclerViewAdapter(this, bookList,true, object : RecyclerViewAdapter.OnItemClickListener{
+            override fun onItemClick(item: Book) {
                 val intent = Intent(application, DetailActivity::class.java)
                 startActivity(intent)
             }
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
-        adapter.addAll(bookData)
+//        adapter.addAll(bookList)
 
         floatingActionButton.setOnClickListener {
             val intent = Intent(application, DetailActivity::class.java)

@@ -10,7 +10,7 @@ class RealmBookApplication: Application() {
 
         Realm.init(this)
 
-        val realmConfig = Realmconfigration.Builder()
+        val realmConfig = RealmConfiguration.Builder()
             .deleteRealmIfMigrationNeeded()
             .build()
         Realm.setDefaultConfiguration(realmConfig)

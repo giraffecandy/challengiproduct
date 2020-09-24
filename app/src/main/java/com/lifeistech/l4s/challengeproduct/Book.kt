@@ -7,7 +7,7 @@ open class Book (
     @PrimaryKey
     open var title: String,
     open var auther: String,
-    open var desdription: String,
+    open var description: String,
     open var price: Int,
     open var time: Int
 ) : RealmObject()
