@@ -2,7 +2,6 @@ package com.lifeistech.l4s.challengeproduct
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.system.Os.read
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -25,12 +24,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun save(title: String, auther: String, description: String, price: String, getTime:DateFormat){
-        val book:Book? = read()
-
-        realm.executeTramsaction{
-            if (book != null) {
-
-            }
-        }
+        val bo
     }
 }
