@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val realm: Realm = Realm.getDefaultInstance()
+    private val realm: Realm = Realm.getDefaultInstance()
     private lateinit var mContext: Context;
 //    val bookData: List<BookData> = listOf()
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun readAll(): RealmResults<Book> {
+    private fun readAll(): RealmResults<Book> {
         return realm.where(Book::class.java).findAll().sort("createdAt", Sort.ASCENDING)
     }
     override fun onDestroy() {
@@ -70,4 +70,3 @@ class MainActivity : AppCompatActivity() {
         realm.close()
     }
 }
-
