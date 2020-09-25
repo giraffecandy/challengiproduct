@@ -1,10 +1,9 @@
 package com.lifeistech.l4s.challengeproduct
 
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_edit.*
@@ -20,8 +19,6 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
         // Backボタンを有効にする
 //        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -45,6 +42,22 @@ class EditActivity : AppCompatActivity() {
             autherEditText.setText(book.auther)
             priceEditText.setText(book.price.toString())
             descriptionEditText.setText(book.description)
+        }
+
+//        val imageButton = backButton(this)
+//        imageButton.setBackgroundDrawable(null)
+        
+        backButton.setOnClickListener {
+            val title: String = titleEditText.text.toString()
+            val auther: String = autherEditText.text.toString()
+            val description: String = descriptionEditText.text.toString()
+            val price: String = priceEditText.text.toString()
+            val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+
+            save(title, auther, description, price, getTime)
+
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
         }
 
         addButton.setOnClickListener{
@@ -93,3 +106,4 @@ class EditActivity : AppCompatActivity() {
 
 
 }
+

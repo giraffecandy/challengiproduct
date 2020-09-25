@@ -93,14 +93,22 @@
         android:id="@+id/toolbar"
         android:layout_width="391dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         android:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/Theme.AppCompat.Light" />
+        app:popupTheme="@style/Theme.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24" />
+
+    </androidx.appcompat.widget.Toolbar>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

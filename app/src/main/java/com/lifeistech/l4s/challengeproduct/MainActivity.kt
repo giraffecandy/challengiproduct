@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,11 +50,18 @@ class MainActivity : AppCompatActivity() {
 
         val bookList: RealmResults<Book> = readAll()
 
+        if (bookList == null){
+            firstTextView.isVisible = true
+        } else {
+            firstTextView.isVisible = false
+        }
+
 
         val adapter = RecyclerViewAdapter(this, bookList,true, object : RecyclerViewAdapter.OnItemClickListener{
             override fun onItemClick(item: Book) {
 
-                val intent = Intent(application, EditActivity::class.java)
+                val intent = Intent(application, DetailActivity::class.java)
+                intent.putExtra("GO_DETAIL", item.id)
                 startActivity(intent)
             }
         })
@@ -82,4 +90,6 @@ class MainActivity : AppCompatActivity() {
 //        super.onDestroy()
 //        realm.close()
 //    }
+
+
 }

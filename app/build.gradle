@@ -23,6 +23,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
@@ -39,5 +44,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'io.realm:android-adapters:3.1.0'
+
+    implementation "android.arch.navigation:navigation-fragment:1.0.0"
+    implementation "android.arch.navigation:navigation-ui:1.0.0"
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
 
 }

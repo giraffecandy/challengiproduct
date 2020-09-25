@@ -15,7 +15,39 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <ImageButton
+            android:id="@+id/returnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24"
+            tools:layout_editor_absoluteY="12dp" />
+
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingStart="270dp"
+            app:srcCompat="@drawable/ic_baseline_create_24"
+            tools:layout_editor_absoluteX="249dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageButton
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_baseline_delete_24"
+            tools:layout_editor_absoluteY="6dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +75,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/titleEditTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -58,6 +90,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -69,10 +102,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/autherEditTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -99,10 +135,12 @@
                         android:id="@+id/textView11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="\\" />
+                        android:text="￥"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/priceEditTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView" />
@@ -121,7 +159,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/descriptionEditTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
