@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.realm.Realm
-import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +31,20 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+//                val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+//        recyclerView.setHasFixedSize(true) //viewの大きさが固定の場合，処理パフォーマンスが向上する
+//
+//        /*****************************************重要*****************************************************/
+//        /*****************************************重要 */
+//        val gridLayoutManagerVertical =
+//            GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false)
+//        gridLayoutManagerVertical.spanSizeLookup = Custom_Spansize(4, 2, 1)
+//        recyclerView.layoutManager = gridLayoutManagerVertical
+//        /*************************************************************************************************/
+//        /** */
+//        val adapter2 = RecyclerViewAdapter(this) //20個itemを作る
+
+
         mContext = this
 
         val bookList: RealmResults<Book> = readAll()
@@ -40,19 +52,20 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = RecyclerViewAdapter(this, bookList,true, object : RecyclerViewAdapter.OnItemClickListener{
             override fun onItemClick(item: Book) {
-                val intent = Intent(application, DetailActivity::class.java)
+
+                val intent = Intent(application, EditActivity::class.java)
                 startActivity(intent)
             }
         })
 
-        recyclerView.layoutManager = GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
 //        adapter.addAll(bookList)
 
         floatingActionButton.setOnClickListener {
-            val intent = Intent(application, DetailActivity::class.java)
+            val intent = Intent(application, EditActivity::class.java)
             startActivity(intent)
         }
 
@@ -65,8 +78,8 @@ class MainActivity : AppCompatActivity() {
     private fun readAll(): RealmResults<Book> {
         return realm.where(Book::class.java).findAll().sort("createdAt", Sort.ASCENDING)
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        realm.close()
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        realm.close()
+//    }
 }

@@ -14,34 +14,6 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
 
-//class RecyclerViewAdapter(private val mactivity: Activity, private val item_count: Int) :
-//    RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder?>() {
-//    }
-
-    //ここでviewに対し変化を施す
-//    override fun onBindViewHolder(
-//        viewHolder: ViewHolder?,
-//        i: Int
-//    ) {
-//        // データ表示
-//        if (0 <= i && i <= 3) {
-//            //viewHolder.title1.setText(test[i] + "さん");
-//        } else if (4 <= i && i <= 7) { // creates second view
-//            //viewHolder.title2.setText("hello");
-//        } else { // creates third view
-//            //viewHolder.title3.setText("test");
-//        }
-//    }
-
-
-    /** */
-//    inner class ViewHolder  /*TextView title1;
-//        TextView title2;
-//        TextView title3;*/
-//        (view: View?, i: Int) : RecyclerView.ViewHolder(view!!)
-//
-//}
-
 class RecyclerViewAdapter(
     private val context: Context,
     private var bookList: OrderedRealmCollection<Book>,
@@ -61,11 +33,11 @@ class RecyclerViewAdapter(
 //    val items: MutableList<BookData> = mutableListOf()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titleText: TextView = view.findViewById(R.id.titleEditText)
-        val autherText: TextView = view.findViewById(R.id.autherEditText)
-        val descriptionText: TextView = view.findViewById(R.id.descriptionEditText)
-        val priceText: TextView = view.findViewById(R.id.priceEditText)
-        val timeText: TextView = view.findViewById(R.id.timeTextView)
+        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
+        val autherTextView: TextView = view.findViewById(R.id.autherTextView)
+//        val descriptionTextView: TextView = view.findViewById(R.id.descriptionTex)
+//        val priceTextView: TextView = view.findViewById(R.id.priceEditText)
+        val timeTextView: TextView = view.findViewById(R.id.timeTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -73,7 +45,7 @@ class RecyclerViewAdapter(
 //        val view: View
 //        val viewHold: ViewHolder
         val view: View = LayoutInflater.from(context)
-            .inflate(R.layout.layout1, parent, false)
+            .inflate(R.layout.item_book_data_cell, parent, false)
         val viewHold: ViewHolder = ViewHolder(view)
         // クリックリスナを搭載
         view.setOnClickListener {
@@ -90,13 +62,13 @@ class RecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (bookList.get(position).isValid()) {
+        if (bookList[position].isValid) {
             val item = bookList[position]
-            holder.titleText.text = item.title
-            holder.autherText.text = item.auther
-            holder.descriptionText.text = item.description
-            holder.priceText.text = item.price.toString()
-            holder.timeText.text = item.time.toString()
+            holder.titleTextView.text = item.title
+            holder.autherTextView.text = item.auther
+//            holder.descriptionTextView.text = item.description
+//            holder.priceTextView.text = item.price.toString()
+            holder.timeTextView.text = item.time.toString()
         }
 
 //    fun addAll(items: List<BookData>) {
