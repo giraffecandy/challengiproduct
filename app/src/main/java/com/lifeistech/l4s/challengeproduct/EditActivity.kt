@@ -2,13 +2,14 @@ package com.lifeistech.l4s.challengeproduct
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_edit.*
-import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,23 +33,34 @@ class EditActivity : AppCompatActivity() {
 
 //        Log.d("selecte", selectedData.toString())
         if (acceptData != null) {
-            var selectedData: Book? =
+            var getId: Book? =
                 realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
-            Log.d("data", selectedData.toString())
-            if (selectedData != null) {
-                titleEditTextView.setText(selectedData.title)
-                autherEditTextView.setText(selectedData.auther)
-                priceEditTextView.setText(selectedData.price.toString())
-                descriptionEditTextView.setText(selectedData.description)
+            Log.d("data", getId.toString())
 
-            } else {
+            if (getId != null) {
+                titleEditTextView.text = getId.title
+                if (titleEditTextView == null){
+                titleEditTextView.text = ""
+                }
+                if (autherEditTextView != null){
+                    autherEditTextView.text = getId.auther
+                }
+                if (priceEditTextView != null){
+                    priceEditTextView.setText(getId.price.toString())
+                }
+                if (descriptionEditTextView != null){
+                descriptionEditTextView.setText(getId.description)
+                }
+            }
+//                else {
 
-                titleEditText.text = null
-                autherEditText.text = null
-                priceEditText.text = null
-                descriptionEditText.text = null
-
-        }}
+//                titleEditText.text = null
+//                autherEditText.text = null
+//                priceEditText.text = null
+//                descriptionEditText.text = null
+//
+//        }
+    }
 
 //            titleEditText.setText(book?.title)
 //            autherEditText.setText(book?.auther)
@@ -79,6 +91,28 @@ class EditActivity : AppCompatActivity() {
                     val description: String = descriptionEditText.text.toString()
                     val price: String = priceEditText.text.toString()
                     val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+//                    val sdf =
+//                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
+//                    sdf.timeZone = TimeZone.getTimeZone("Asia/Tokyo")
+
+//                    try {
+//                        val time = sdf.parse("2016-01-24T16:00:00.000Z").time
+//                        val now = System.currentTimeMillis()
+//                        val ago = DateUtils.getRelativeTimeSpanString(
+//                            time,
+//                            now,
+//                            DateUtils.MINUTE_IN_MILLIS
+//                        )
+//                    } catch (e: ParseException) {
+//                        e.printStackTrace()
+//                    }
+
+//                    val date: Date = getTime.parse(dateStr)
+//                    val niceDateStr: String = DateUtils.getRelativeTimeSpanString(
+//                        date.time,
+//                        Calendar.getInstance().timeInMillis,
+//                        DateUtils.MINUTE_IN_MILLIS
+//                    ) as String
 
                     save(title, auther, description, price, getTime)
 
@@ -111,7 +145,8 @@ class EditActivity : AppCompatActivity() {
                 auther: String,
                 description: String,
                 price: String,
-                getTime: DateFormat
+                getTime: SimpleDateFormat
+//                sdf: SimpleDateFormat
             ) {
                 realm.executeTransaction {
 
@@ -120,7 +155,8 @@ class EditActivity : AppCompatActivity() {
                     book.auther = auther
                     book.description = description
                     book.price = price.toInt()
-                    //book.getTime = getTime.toString()
+//                    book.time = sdf.toInt()
+//                    book.time = getTime.toInt()
                 }
             }
 

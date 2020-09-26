@@ -2,10 +2,12 @@ package com.lifeistech.l4s.challengeproduct
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_detail.*
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -28,12 +30,13 @@ Log.d("selectd", selectedData.toString())
             autherEditTextView.text = selectedData?.auther
             priceEditTextView.text = selectedData?.price.toString()
             descriptionEditTextView.text = selectedData?.description
+        val getId = selectedData?.id
 
         editButton.setOnClickListener {
 
 //            fun editOnItemClick(item: Book) {
                 val intent = Intent(this, EditActivity::class.java)
-                intent.putExtra("GO_EDIT", selectedData.toString())
+                intent.putExtra("GO_EDIT", getId)
                 startActivity(intent)
                 Log.d("edit", selectedData.toString())
 //            }

@@ -25,12 +25,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val bookList: RealmResults<Book> = readAll()
 
-        Log.d("bookcontent", bookList.toString())
-        if (bookList != null) {
-            firstTextView.isVisible = false
-        } else {
-            firstTextView.isVisible = true
-        }
+
+
+
+//        Log.d("bookcontent", bookList.toString())
+//        if (bookList != null) {
+//            firstTextView.isVisible = false
+//        } else {
+//            firstTextView.isVisible = true
+//        }
 
     }
 
