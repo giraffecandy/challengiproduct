@@ -24,31 +24,31 @@ class EditActivity : AppCompatActivity() {
         val book: Book? = read()
 
 
-        val acceptData = intent.getStringExtra("GO_EDIT")
+        val acceptData:String? = intent.getStringExtra("GO_EDIT")
 
-        Log.d("scceept", acceptData.toString())
+        Log.d("accept", acceptData.toString())
+//    var selectedData = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 
-        var selectedDataAtEditActivity = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 
-        Log.d("selecte", selectedDataAtEditActivity.toString())
-//        if (acceptData != null) {
-//            var selectedData: Book? =
-//                realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
-//            Log.d("data", selectedData.toString())
-            if (selectedDataAtEditActivity != null) {
-                titleEditTextView.setText(selectedDataAtEditActivity.title)
-                autherEditTextView.setText(selectedDataAtEditActivity.auther)
-                priceEditTextView.setText(selectedDataAtEditActivity.price.toString())
-                descriptionEditTextView.setText(selectedDataAtEditActivity.description)
-            }
-//        } else {
-//
-//            titleEditText.text = null
-//            autherEditText.text = null
-//            priceEditText.text = null
-//            descriptionEditText.text = null
-//
-//        }
+//        Log.d("selecte", selectedData.toString())
+        if (acceptData != null) {
+            var selectedData: Book? =
+                realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
+            Log.d("data", selectedData.toString())
+            if (selectedData != null) {
+                titleEditTextView.setText(selectedData.title)
+                autherEditTextView.setText(selectedData.auther)
+                priceEditTextView.setText(selectedData.price.toString())
+                descriptionEditTextView.setText(selectedData.description)
+
+            } else {
+
+                titleEditText.text = null
+                autherEditText.text = null
+                priceEditText.text = null
+                descriptionEditText.text = null
+
+        }}
 
 //            titleEditText.setText(book?.title)
 //            autherEditText.setText(book?.auther)
@@ -59,7 +59,7 @@ class EditActivity : AppCompatActivity() {
 //        val imageButton = backButton(this)
 //        imageButton.setBackgroundDrawable(null)
 
-        backButton.setOnClickListener {
+                backButton.setOnClickListener {
 //            val title: String = titleEditText.text.toString()
 //            val auther: String = autherEditText.text.toString()
 //            val description: String = descriptionEditText.text.toString()
@@ -68,62 +68,62 @@ class EditActivity : AppCompatActivity() {
 //
 //            save(title, auther, description, price, getTime)
 
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
-        }
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                }
 
-        addButton.setOnClickListener {
+                addButton.setOnClickListener {
 //            if(realm.where(Book::class.java).equalTo("id", id) == null)
-            val title: String = titleEditText.text.toString()
-            val auther: String = autherEditText.text.toString()
-            val description: String = descriptionEditText.text.toString()
-            val price: String = priceEditText.text.toString()
-            val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+                    val title: String = titleEditText.text.toString()
+                    val auther: String = autherEditText.text.toString()
+                    val description: String = descriptionEditText.text.toString()
+                    val price: String = priceEditText.text.toString()
+                    val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 
-            save(title, auther, description, price, getTime)
+                    save(title, auther, description, price, getTime)
 
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                }
+
+
+            }
+
+            override fun onDestroy() {
+                super.onDestroy()
+                realm.close()
+            }
+
+            override fun onOptionsItemSelected(item: MenuItem): Boolean {
+                val id: Int = item.getItemId()
+                when (id) {
+                    android.R.id.home -> finish()
+                }
+                return super.onOptionsItemSelected(item)
+            }
+
+            private fun read(): Book? {
+                return realm.where(Book::class.java).findFirst()
+            }
+
+            fun save(
+                title: String,
+                auther: String,
+                description: String,
+                price: String,
+                getTime: DateFormat
+            ) {
+                realm.executeTransaction {
+
+                    val book = it.createObject(Book::class.java, UUID.randomUUID().toString())
+                    book.title = title
+                    book.auther = auther
+                    book.description = description
+                    book.price = price.toInt()
+                    //book.getTime = getTime.toString()
+                }
+            }
+
+
         }
-
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        realm.close()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.getItemId()
-        when (id) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun read(): Book? {
-        return realm.where(Book::class.java).findFirst()
-    }
-
-    fun save(
-        title: String,
-        auther: String,
-        description: String,
-        price: String,
-        getTime: DateFormat
-    ) {
-        realm.executeTransaction {
-
-            val book = it.createObject(Book::class.java, UUID.randomUUID().toString())
-            book.title = title
-            book.auther = auther
-            book.description = description
-            book.price = price.toInt()
-            //book.getTime = getTime.toString()
-        }
-    }
-
-
-}
 
