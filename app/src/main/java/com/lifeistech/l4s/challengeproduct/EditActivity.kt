@@ -28,24 +28,27 @@ class EditActivity : AppCompatActivity() {
 
         Log.d("scceept", acceptData.toString())
 
-        if (acceptData != null) {
-            var selectedData: Book? =
-                realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
-            Log.d("data", selectedData.toString())
-            if (selectedData != null) {
-                titleEditTextView.setText(selectedData.title)
-                autherEditTextView.setText(selectedData.auther)
-                priceEditTextView.setText(selectedData.price.toString())
-                descriptionEditTextView.setText(selectedData.description)
+        var selectedDataAtEditActivity = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
+
+        Log.d("selecte", selectedDataAtEditActivity.toString())
+//        if (acceptData != null) {
+//            var selectedData: Book? =
+//                realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
+//            Log.d("data", selectedData.toString())
+            if (selectedDataAtEditActivity != null) {
+                titleEditTextView.setText(selectedDataAtEditActivity.title)
+                autherEditTextView.setText(selectedDataAtEditActivity.auther)
+                priceEditTextView.setText(selectedDataAtEditActivity.price.toString())
+                descriptionEditTextView.setText(selectedDataAtEditActivity.description)
             }
-        } else {
-
-            titleEditText.text = null
-            autherEditText.text = null
-            priceEditText.text = null
-            descriptionEditText.text = null
-
-        }
+//        } else {
+//
+//            titleEditText.text = null
+//            autherEditText.text = null
+//            priceEditText.text = null
+//            descriptionEditText.text = null
+//
+//        }
 
 //            titleEditText.setText(book?.title)
 //            autherEditText.setText(book?.auther)
