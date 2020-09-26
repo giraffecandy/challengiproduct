@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         val results = realm.where(Book::class.java).findAll()
         val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
-        Log.d("hoge", results.toString())
+//        Log.d("hoge", results.toString())
 
     }
 

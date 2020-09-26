@@ -2,6 +2,7 @@ package com.lifeistech.l4s.challengeproduct
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -23,15 +24,19 @@ class DetailActivity : AppCompatActivity() {
 
         var selectedData = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 
-        titleEditTextView.text = selectedData?.title
-        autherEditTextView.text = selectedData?.auther
-        priceEditTextView.text = selectedData?.price.toString()
-        descriptionEditTextView.text = selectedData?.description
+            titleEditTextView.text = selectedData?.title
+            autherEditTextView.text = selectedData?.auther
+            priceEditTextView.text = selectedData?.price.toString()
+            descriptionEditTextView.text = selectedData?.description
 
         editButton.setOnClickListener {
-            val intent = Intent(this, EditActivity::class.java)
-            intent.putExtra("GO_EDIT", acceptData)
-            startActivity(intent)
+
+//            fun editOnItemClick(item: Book) {
+                val intent = Intent(this, EditActivity::class.java)
+                intent.putExtra("GO_EDIT", selectedData.toString())
+                startActivity(intent)
+                Log.d("edit", selectedData.toString())
+//            }
         }
 
         deleteButton.setOnClickListener {

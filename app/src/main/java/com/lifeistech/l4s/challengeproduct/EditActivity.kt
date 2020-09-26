@@ -2,10 +2,11 @@ package com.lifeistech.l4s.challengeproduct
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -19,25 +20,42 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        fun detail(){
-            //detailactivityからのキー
+
+        val book: Book? = read()
+
+
+        val acceptData = intent.getStringExtra("GO_EDIT")
+
+        Log.d("scceept", acceptData.toString())
+
+        if (acceptData != null) {
+            var selectedData: Book? =
+                realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
+            Log.d("data", selectedData.toString())
+            if (selectedData != null) {
+                titleEditTextView.setText(selectedData.title)
+                autherEditTextView.setText(selectedData.auther)
+                priceEditTextView.setText(selectedData.price.toString())
+                descriptionEditTextView.setText(selectedData.description)
+            }
+        } else {
+
+            titleEditText.text = null
+            autherEditText.text = null
+            priceEditText.text = null
+            descriptionEditText.text = null
+
         }
 
-        fun new (){
-            //新しい  上に宣言して１個目でその下の二個目に入れればよい
-            //データありなしかで判定
-        }
+//            titleEditText.setText(book?.title)
+//            autherEditText.setText(book?.auther)
+//            priceEditText.setText(book?.price.toString())
+//            descriptionEditText.setText(book?.description)
 
-        val book:Book? = read()
-
-         titleEditText.setText(book?.title)
-            autherEditText.setText(book?.auther)
-            priceEditText.setText(book?.price.toString())
-            descriptionEditText.setText(book?.description)
 
 //        val imageButton = backButton(this)
 //        imageButton.setBackgroundDrawable(null)
-        
+
         backButton.setOnClickListener {
 //            val title: String = titleEditText.text.toString()
 //            val auther: String = autherEditText.text.toString()
@@ -51,7 +69,7 @@ class EditActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        addButton.setOnClickListener{
+        addButton.setOnClickListener {
 //            if(realm.where(Book::class.java).equalTo("id", id) == null)
             val title: String = titleEditText.text.toString()
             val auther: String = autherEditText.text.toString()
@@ -64,6 +82,8 @@ class EditActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     override fun onDestroy() {
@@ -79,11 +99,17 @@ class EditActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun read(): Book?{
+    private fun read(): Book? {
         return realm.where(Book::class.java).findFirst()
     }
 
-    fun save(title: String, auther: String, description: String, price: String, getTime:DateFormat){
+    fun save(
+        title: String,
+        auther: String,
+        description: String,
+        price: String,
+        getTime: DateFormat
+    ) {
         realm.executeTransaction {
 
             val book = it.createObject(Book::class.java, UUID.randomUUID().toString())
