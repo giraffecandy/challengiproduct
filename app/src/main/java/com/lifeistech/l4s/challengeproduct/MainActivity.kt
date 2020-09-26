@@ -29,11 +29,11 @@ class MainActivity : AppCompatActivity() {
 
 
 //        Log.d("bookcontent", bookList.toString())
-//        if (bookList != null) {
-//            firstTextView.isVisible = false
-//        } else {
-//            firstTextView.isVisible = true
-//        }
+        if (bookList != null) {
+            firstTextView.isVisible = false
+        } else {
+            firstTextView.isVisible = true
+        }
 
     }
 

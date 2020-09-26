@@ -2,6 +2,7 @@ package com.lifeistech.l4s.challengeproduct
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.MenuItem
@@ -35,23 +36,19 @@ class EditActivity : AppCompatActivity() {
         if (acceptData != null) {
             var getId: Book? =
                 realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
-            Log.d("data", getId.toString())
-
+//            Log.d("data", getId.toString())
+            val titleEdit= getId?.title
             if (getId != null) {
-                titleEditTextView.text = getId.title
-                if (titleEditTextView == null){
-                titleEditTextView.text = ""
+                titleEditText.setText(getId.title)
+                    autherEditText.setText(getId.auther)
+                    priceEditText.setText(getId.price.toString())
+                descriptionEditText.setText(getId.description)
+
+                addButton.setOnClickListener {
+
+                    realm.commitTransaction()
                 }
-                if (autherEditTextView != null){
-                    autherEditTextView.text = getId.auther
                 }
-                if (priceEditTextView != null){
-                    priceEditTextView.setText(getId.price.toString())
-                }
-                if (descriptionEditTextView != null){
-                descriptionEditTextView.setText(getId.description)
-                }
-            }
 //                else {
 
 //                titleEditText.text = null
@@ -150,6 +147,7 @@ class EditActivity : AppCompatActivity() {
             ) {
                 realm.executeTransaction {
 
+
                     val book = it.createObject(Book::class.java, UUID.randomUUID().toString())
                     book.title = title
                     book.auther = auther
@@ -159,7 +157,6 @@ class EditActivity : AppCompatActivity() {
 //                    book.time = getTime.toInt()
                 }
             }
-
 
         }
 
