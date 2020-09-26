@@ -71,10 +71,6 @@ class RecyclerViewAdapter(
             listener.onItemClick(item)
         }
 
-        val results = realm.where(Book::class.java).findAll()
-        val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
-        Log.d("hoge1", numberOfItems.toString())
-
 //        val calcTime = time(numberOfItems.get(0))
 //        val calculateTime = numberOfItems.calcTime
 
@@ -90,51 +86,5 @@ class RecyclerViewAdapter(
         fun onItemClick(item: Book)
     }
 
-    fun time(book: Book): String {
-        val calendar = Calendar.getInstance()
-        val yearLatest = calendar.get(Calendar.YEAR)
-        val monthLatest = calendar.get(Calendar.MONTH)
-        val dateLatest = calendar.get(Calendar.DATE)
-        val hourLatest = calendar.get(Calendar.HOUR)
-        val minLatest = calendar.get(Calendar.MINUTE)
-
-        val year = book.year
-        val month = book.month
-        val date = book.date
-        val hour = book.hour
-        val min = book.min
-
-        if (year != yearLatest) {
-            val result = yearLatest - year
-            val display = "$result + 年前"
-            return display
-
-        } else if (month != monthLatest) {
-
-            val result = monthLatest - month
-            val re = Math.abs(result)
-            val display = "$re + 月前"
-            return display
-
-        } else if (date != dateLatest) {
-
-            val result = dateLatest - date
-            val re = Math.abs(result)
-            return "$re + 日前"
-
-        } else if (hour != hourLatest) {
-
-            val result = hourLatest - hour
-            val re = abs(result)
-            return "$re + 時間前"
-
-        } else if (date != dateLatest) {
-            val calcResult = date - dateLatest
-            val re = Math.abs(calcResult)
-            return "$re + 分前"
-        }
-
-        return "0分前"
-    }
 
 }

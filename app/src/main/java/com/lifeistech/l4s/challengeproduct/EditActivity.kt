@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
+import io.realm.RealmResults
+import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.time.Year
 import java.util.*
-import kotlin.math.truncate
+import kotlin.math.abs
 
 
 class EditActivity : AppCompatActivity() {
@@ -24,15 +23,17 @@ class EditActivity : AppCompatActivity() {
 
 
         val book: Book? = read()
+        val bookList: RealmResults<Book> = readAll()
+
 
         val acceptData: String = intent.getStringExtra("GO_EDIT").toString()
-            var getId: Book? = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
+        var getId: Book? = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 //        if (getId == null){
 //
 //        }
 
 
-            Log.d("accept", acceptData.toString())
+        Log.d("accept", acceptData.toString())
 //    var selectedData = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 
 
@@ -40,15 +41,15 @@ class EditActivity : AppCompatActivity() {
 //            if (acceptData != null) {
 //            Log.d("data", getId.toString())
 //            if (getId != null) {
-                titleEditText.setText(getId?.title)
-                autherEditText.setText(getId?.auther)
-                priceEditText.setText(getId?.price.toString())
-                descriptionEditText.setText(getId?.description)
+        titleEditText.setText(getId?.title)
+        autherEditText.setText(getId?.auther)
+        priceEditText.setText(getId?.price.toString())
+        descriptionEditText.setText(getId?.description)
 
-                addButton.setOnClickListener {
+        addButton.setOnClickListener {
 
-                    realm.commitTransaction()
-                }
+            realm.commitTransaction()
+        }
 //                }
 //            }
 
@@ -66,6 +67,11 @@ class EditActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val results = realm.where(Book::class.java).findAll()
+        val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
+        val calcTime = time(numberOfItems.get(0))
+        Log.d("hoge1", calcTime)
+
         addButton.setOnClickListener {
             if (getId == null) {
                 val title: String = titleEditText.text.toString()
@@ -78,11 +84,12 @@ class EditActivity : AppCompatActivity() {
                 val date = calendar.get(Calendar.DATE)
                 val hour = calendar.get(Calendar.HOUR)
                 val min = calendar.get(Calendar.MINUTE)
+                val time = calcTime
 //                Log.d("date", month.toString())
 //                firstTextView.setText(truncate(month + 1.0).toInt().toString())
 
 
-                save(title, auther, description, price, year, month, date, hour, min)
+                save(title, auther, description, price, year, month, date, hour, min, time)
             } else {
                 realm.executeTransaction {
                     var title: String = titleEditText.text.toString()
@@ -105,6 +112,58 @@ class EditActivity : AppCompatActivity() {
 
 
     }
+
+    fun time(book: Book): String {
+        val calendar = Calendar.getInstance()
+        val yearLatest = calendar.get(Calendar.YEAR)
+        val monthLatest = calendar.get(Calendar.MONTH)
+        val dateLatest = calendar.get(Calendar.DATE)
+        val hourLatest = calendar.get(Calendar.HOUR)
+        val minLatest = calendar.get(Calendar.MINUTE)
+
+        val year = book.year
+        val month = book.month
+        val date = book.date
+        val hour = book.hour
+        val min = book.min
+
+        if (year != yearLatest) {
+            val result = yearLatest - year
+            val display = "$result 年前"
+            return display
+
+        } else if (month != monthLatest) {
+
+            val result = monthLatest - month
+            val re = Math.abs(result)
+            val display = "$re 月前"
+            return display
+
+        } else if (date != dateLatest) {
+
+            val result = dateLatest - date
+            val re = Math.abs(result)
+            return "$re 日前"
+
+        } else if (hour != hourLatest) {
+
+            val result = hourLatest - hour
+            val re = abs(result)
+            return "$re 時間前"
+
+        } else if (date != dateLatest) {
+            val calcResult = date - dateLatest
+            val re = Math.abs(calcResult)
+            return "$re 分前"
+        }
+
+        return "0分前"
+    }
+
+    private fun readAll(): RealmResults<Book> {
+        return realm.where(Book::class.java).findAll().sort("createdAt", Sort.ASCENDING)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -130,9 +189,9 @@ class EditActivity : AppCompatActivity() {
         price: String,
         year: Int,
         month: Int,
-        date :Int,
+        date: Int,
         hour: Int,
-        min: Int
+        min: Int, time: String
     ) {
         realm.executeTransaction {
 
@@ -146,6 +205,7 @@ class EditActivity : AppCompatActivity() {
             book.date = date
             book.hour = hour
             book.min = min
+            book.time = time
         }
     }
 
