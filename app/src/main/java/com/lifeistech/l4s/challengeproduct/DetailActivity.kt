@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.internal.ContextUtils.getActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -31,20 +30,20 @@ class DetailActivity : AppCompatActivity() {
         val acceptData = intent.getStringExtra("GO_DETAIL")
 
         var selectedData = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
-Log.d("selectd", selectedData.toString())
-            titleEditTextView.text = selectedData?.title
-            autherEditTextView.text = selectedData?.auther
-            priceEditTextView.text = selectedData?.price.toString()
-            descriptionEditTextView.text = selectedData?.description
+        Log.d("selectd", selectedData.toString())
+        titleEditTextView.text = selectedData?.title
+        autherEditTextView.text = selectedData?.auther
+        priceEditTextView.text = selectedData?.price.toString()
+        descriptionEditTextView.text = selectedData?.description
         val getId = selectedData?.id
 
         editButton.setOnClickListener {
 
 //            fun editOnItemClick(item: Book) {
-                val intent = Intent(this, EditActivity::class.java)
-                intent.putExtra("GO_EDIT", getId)
-                startActivity(intent)
-                Log.d("edit", selectedData.toString())
+            val intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("GO_EDIT", getId)
+            startActivity(intent)
+            Log.d("edit", selectedData.toString())
 //            }
         }
 

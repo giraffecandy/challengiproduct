@@ -11,6 +11,10 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.math.abs
+import kotlin.math.truncate
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,10 +27,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bookList: RealmResults<Book> = readAll()
+        val empty = realm.where(Book::class.java).findFirst()
+        if (empty != null) {
+            firstTextView.isVisible = false
+        } else {
+            firstTextView.isVisible = true
+        }
 
-
-
+//        val cl = Calendar.getInstance()
+//        val nowDate = Calendar.YEAR
+//        val month: Int = cl.get(Calendar.MONTH)
+//        Log.d("date", month.toString())
+//        firstTextView.setText(truncate(month + 1.0).toInt().toString())
+//        println(truncate(1.1f))
 
 //        Log.d("bookcontent", bookList.toString())
 //        if (bookList != null) {
@@ -78,7 +91,11 @@ class MainActivity : AppCompatActivity() {
 
         val results = realm.where(Book::class.java).findAll()
         val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
-//        Log.d("hoge", results.toString())
+        Log.d("hoge", results.toString())
+
+
+//        val saveDate = realm.where(Book::class.java).findFirst()
+//        saveDate.year
 
     }
 
@@ -90,5 +107,45 @@ class MainActivity : AppCompatActivity() {
 //        realm.close()
 //    }
 
-
+//    fun time(book: Book): Int {
+//        val calendar = Calendar.getInstance()
+//        val yearLatest = calendar.get(Calendar.YEAR)
+//        val monthLatest = calendar.get(Calendar.MONTH)
+//        val dateLatest = calendar.get(Calendar.DATE)
+//        val hourLatest = calendar.get(Calendar.HOUR)
+//        val minLatest = calendar.get(Calendar.MINUTE)
+//
+//        val year = book.year
+//        val month = book.month
+//        val date = book.date
+//        val hour = book.hour
+//        val min = book.min
+//
+//        if (year != yearLatest) {
+//            val result = yearLatest - year
+//            return result
+//
+//        } else if (month != monthLatest) {
+//
+//            val result = monthLatest - month
+//            return Math.abs(result)
+//
+//        } else if (date != dateLatest) {
+//
+//            val result = dateLatest - date
+//            return Math.abs(result)
+//
+//        } else if (hour != hourLatest) {
+//
+//            val result = hourLatest - hour
+//            return abs(result)
+//        } else if (date != dateLatest) {
+//            val calcResult = date - dateLatest
+//            return Math.abs(calcResult)
+//        }
+//
+//        return 0
+//    }
 }
+
+

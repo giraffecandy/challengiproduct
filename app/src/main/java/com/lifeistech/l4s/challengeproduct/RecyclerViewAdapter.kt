@@ -9,8 +9,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.realm.OrderedRealmCollection
+import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.item_book_data_cell.view.*
+import java.util.*
+import kotlin.math.abs
 
 
 class RecyclerViewAdapter(
@@ -24,6 +27,7 @@ class RecyclerViewAdapter(
 //    ): ViewHolder {
 //    }
 
+    private val realm: Realm = Realm.getDefaultInstance()
 
 //    val items: MutableList<BookData> = mutableListOf()
 
@@ -35,6 +39,7 @@ class RecyclerViewAdapter(
 //        val priceTextView: TextView = view.findViewById(R.id.priceEditText)
         val timeTextView: TextView = view.findViewById(R.id.timeTextView)
         val container: LinearLayout = view.container
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -66,15 +71,70 @@ class RecyclerViewAdapter(
             listener.onItemClick(item)
         }
 
+        val results = realm.where(Book::class.java).findAll()
+        val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
+        Log.d("hoge1", numberOfItems.toString())
+
+//        val calcTime = time(numberOfItems.get(0))
+//        val calculateTime = numberOfItems.calcTime
+
         holder.titleTextView.text = item.title
         holder.autherTextView.text = item.auther
 //            holder.descriptionTextView.text = item.description
 //            holder.priceTextView.text = item.price.toString()
-        holder.timeTextView.text = item.time.toString()
+        holder.timeTextView.text = item.time
 
     }
 
     interface OnItemClickListener {
         fun onItemClick(item: Book)
     }
+
+    fun time(book: Book): String {
+        val calendar = Calendar.getInstance()
+        val yearLatest = calendar.get(Calendar.YEAR)
+        val monthLatest = calendar.get(Calendar.MONTH)
+        val dateLatest = calendar.get(Calendar.DATE)
+        val hourLatest = calendar.get(Calendar.HOUR)
+        val minLatest = calendar.get(Calendar.MINUTE)
+
+        val year = book.year
+        val month = book.month
+        val date = book.date
+        val hour = book.hour
+        val min = book.min
+
+        if (year != yearLatest) {
+            val result = yearLatest - year
+            val display = "$result + 年前"
+            return display
+
+        } else if (month != monthLatest) {
+
+            val result = monthLatest - month
+            val re = Math.abs(result)
+            val display = "$re + 月前"
+            return display
+
+        } else if (date != dateLatest) {
+
+            val result = dateLatest - date
+            val re = Math.abs(result)
+            return "$re + 日前"
+
+        } else if (hour != hourLatest) {
+
+            val result = hourLatest - hour
+            val re = abs(result)
+            return "$re + 時間前"
+
+        } else if (date != dateLatest) {
+            val calcResult = date - dateLatest
+            val re = Math.abs(calcResult)
+            return "$re + 分前"
+        }
+
+        return "0分前"
+    }
+
 }
