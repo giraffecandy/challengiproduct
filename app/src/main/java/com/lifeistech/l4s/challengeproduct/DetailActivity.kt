@@ -1,10 +1,13 @@
 package com.lifeistech.l4s.challengeproduct
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.internal.ContextUtils.getActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -12,10 +15,13 @@ import kotlinx.android.synthetic.main.activity_detail.*
 class DetailActivity : AppCompatActivity() {
 
     private val realm: Realm = Realm.getDefaultInstance()
+    private lateinit var mContext: Context;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+
+        mContext = this
 
         returnButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -43,10 +49,22 @@ Log.d("selectd", selectedData.toString())
         }
 
         deleteButton.setOnClickListener {
-            realm.executeTransaction {
-                selectedData?.deleteFromRealm()
-            }
-            finish()
+
+            AlertDialog.Builder(mContext)
+                .setTitle("title")
+                .setMessage("message")
+                .setPositiveButton("OK",
+                    DialogInterface.OnClickListener { dialog, which ->
+                        // OK button pressed
+                        realm.executeTransaction {
+                            selectedData?.deleteFromRealm()
+                        }
+                        finish()
+                    })
+                .setNegativeButton("Cancel", null)
+                .show()
+
+
         }
     }
 }
