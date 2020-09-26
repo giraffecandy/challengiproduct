@@ -19,42 +19,33 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
+        fun detail(){
+            //detailactivityからのキー
+        }
 
-        // Backボタンを有効にする
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar!!.setHomeButtonEnabled(true)
-//        supportActionBar!!.setHomeActionContentDescription(R.drawable.ic_baseline_keyboard_backspace_24)
-//
-//        fun onBackPressed() {
-//            super.onBackPressed()
-//
-//        }
-
-        fun onSupportNavigateUp(): Boolean {
-            onBackPressed()
-            return true
+        fun new (){
+            //新しい  上に宣言して１個目でその下の二個目に入れればよい
+            //データありなしかで判定
         }
 
         val book:Book? = read()
 
-        if (book != null) {
-            titleEditText.setText(book.title)
-            autherEditText.setText(book.auther)
-            priceEditText.setText(book.price.toString())
-            descriptionEditText.setText(book.description)
-        }
+         titleEditText.setText(book?.title)
+            autherEditText.setText(book?.auther)
+            priceEditText.setText(book?.price.toString())
+            descriptionEditText.setText(book?.description)
 
 //        val imageButton = backButton(this)
 //        imageButton.setBackgroundDrawable(null)
         
         backButton.setOnClickListener {
-            val title: String = titleEditText.text.toString()
-            val auther: String = autherEditText.text.toString()
-            val description: String = descriptionEditText.text.toString()
-            val price: String = priceEditText.text.toString()
-            val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-
-            save(title, auther, description, price, getTime)
+//            val title: String = titleEditText.text.toString()
+//            val auther: String = autherEditText.text.toString()
+//            val description: String = descriptionEditText.text.toString()
+//            val price: String = priceEditText.text.toString()
+//            val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+//
+//            save(title, auther, description, price, getTime)
 
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)

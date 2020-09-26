@@ -14,6 +14,10 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        returnButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         val acceptData = intent.getStringExtra("GO_DETAIL")
 
@@ -34,9 +38,8 @@ class DetailActivity : AppCompatActivity() {
             realm.executeTransaction {
                 selectedData?.deleteFromRealm()
             }
-
+            finish()
         }
-        finish()
     }
 }
 
