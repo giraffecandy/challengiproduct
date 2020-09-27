@@ -19,7 +19,7 @@ import kotlin.math.abs
 class RecyclerViewAdapter(
     private val context: Context,
     private var bookList: OrderedRealmCollection<Book>,
-//    private var time:String,
+    private var time:String,
     private val autoUpdate: Boolean,
     private var listener: OnItemClickListener
 ) : RealmRecyclerViewAdapter<Book, RecyclerViewAdapter.ViewHolder>(bookList, autoUpdate) {
@@ -81,7 +81,7 @@ class RecyclerViewAdapter(
         holder.autherTextView.text = item.auther
 //            holder.descriptionTextView.text = item.description
 //            holder.priceTextView.text = item.price.toString()
-        holder.timeTextView.text = item.time
+        holder.timeTextView.text = time
 
     }
 

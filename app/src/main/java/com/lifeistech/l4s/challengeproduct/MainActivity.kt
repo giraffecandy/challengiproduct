@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         val AVERAGE_MONTH_IN_MILLIS:Long= DateUtils.DAY_IN_MILLIS * 30
 
-        fun timeidk(time: Long): String {
+        fun times(time: Long): String {
             val now: Long = Date().getTime()
             val delta: Long = now - time
             val resolution: Long
@@ -113,12 +113,11 @@ class MainActivity : AppCompatActivity() {
 //            val search = book.id
 //        }
 
-        val items: RealmResults<Book> =
-            realm.where(Book::class.java).findAll()
+        val items: RealmResults<Book> = realm.where(Book::class.java).findAll()
         for (i in items) {
 //            addText(i.getId().toString() + ":" + i.getName())
-            val time = timeidk(i.createdAt.time)
-        }
+            val time = times(i.createdAt.time)
+
 
 //        fun main() {
 //            val dhu: Se = Se()
@@ -129,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             val adapter = RecyclerViewAdapter(
                 this,
                 bookList,
-//                time,
+                time,
                 true,
                 object : RecyclerViewAdapter.OnItemClickListener {
                     override fun onItemClick(item: Book) {
@@ -143,7 +142,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView.layoutManager = GridLayoutManager(this, 3)
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
-
+        }
 //        adapter.addAll(bookList)
 
         floatingActionButton.setOnClickListener {
