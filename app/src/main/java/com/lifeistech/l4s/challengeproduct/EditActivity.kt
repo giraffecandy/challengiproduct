@@ -28,51 +28,53 @@ class EditActivity : AppCompatActivity() {
 
         val acceptData: String = intent.getStringExtra("GO_EDIT").toString()
         var getId: Book? = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
-//        if (getId == null){
-//
-//        }
-
 
         Log.d("accept", acceptData.toString())
-//    var selectedData = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 
-
-//        Log.d("selecte", selectedData.toString())
-//            if (acceptData != null) {
-//            Log.d("data", getId.toString())
-//            if (getId != null) {
         titleEditText.setText(getId?.title)
         autherEditText.setText(getId?.auther)
         priceEditText.setText(getId?.price.toString())
         descriptionEditText.setText(getId?.description)
 
-        addButton.setOnClickListener {
-
-            realm.commitTransaction()
-        }
-//                }
-//            }
-
+//        addButton.setOnClickListener {
+//
+//            realm.commitTransaction()
+//        }
 
         backButton.setOnClickListener {
-//            val title: String = titleEditText.text.toString()
-//            val auther: String = autherEditText.text.toString()
-//            val description: String = descriptionEditText.text.toString()
-//            val price: String = priceEditText.text.toString()
-//            val getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-//
-//            save(title, auther, description, price, getTime)
 
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)
         }
 
-        val results = realm.where(Book::class.java).findAll()
-        val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
-        val calcTime = time(numberOfItems.get(0))
-        Log.d("hoge1", calcTime)
+//        Log.d("number", numberOfItems.toString())
+//        val calcTime = time(numberOfItems.get()))
+//        Log.d("hoge1", calcTime)
 
         addButton.setOnClickListener {
+
+//            fun each(): Map<Book, Book> {
+                val results = realm.where(Book::class.java).findAll()
+                val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
+//            val each = numberOfItems.forEach{
+//                val number =time(it)
+//                Log.d("number", number)
+//            }
+//                for (elem in numberOfItems) {
+//                    val eaches = time(elem)
+//                    return eaches
+//                }
+//                return each()
+                fun eachesss():String{
+    numberOfItems.forEach {
+            i -> time(i)
+    }
+    Log.d("eacheese", eachesss().toString())
+return eachesss()
+}
+
+//            }
+
             if (getId == null) {
                 val title: String = titleEditText.text.toString()
                 val auther: String = autherEditText.text.toString()
@@ -82,12 +84,9 @@ class EditActivity : AppCompatActivity() {
                 val year = calendar.get(Calendar.YEAR)
                 val month: Int = calendar.get(Calendar.MONTH)
                 val date = calendar.get(Calendar.DATE)
-                val hour = calendar.get(Calendar.HOUR)
+                val hour = calendar.get(Calendar.HOUR_OF_DAY)
                 val min = calendar.get(Calendar.MINUTE)
-                val time = calcTime
-//                Log.d("date", month.toString())
-//                firstTextView.setText(truncate(month + 1.0).toInt().toString())
-
+                val time = eachesss()
 
                 save(title, auther, description, price, year, month, date, hour, min, time)
             } else {
@@ -96,7 +95,6 @@ class EditActivity : AppCompatActivity() {
                     var auther: String = autherEditText.text.toString()
                     var description: String = descriptionEditText.text.toString()
                     var price: String = priceEditText.text.toString()
-//                    var getTime = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 
                     getId.title = title
                     getId.auther = auther
@@ -105,6 +103,7 @@ class EditActivity : AppCompatActivity() {
 
                 }
             }
+
 
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)
@@ -118,14 +117,27 @@ class EditActivity : AppCompatActivity() {
         val yearLatest = calendar.get(Calendar.YEAR)
         val monthLatest = calendar.get(Calendar.MONTH)
         val dateLatest = calendar.get(Calendar.DATE)
-        val hourLatest = calendar.get(Calendar.HOUR)
+        val hourLatest = calendar.get(Calendar.HOUR_OF_DAY)
         val minLatest = calendar.get(Calendar.MINUTE)
+
 
         val year = book.year
         val month = book.month
         val date = book.date
         val hour = book.hour
         val min = book.min
+
+        Log.d("hour1", hourLatest.toString())
+        Log.d("day1", dateLatest.toString())
+        Log.d("min1", minLatest.toString())
+        Log.d("month1", monthLatest.toString())
+        Log.d("year1", yearLatest.toString())
+
+//        Log.d("hour", hour.toString())
+//        Log.d("day", date.toString())
+//        Log.d("min", min.toString())
+//        Log.d("month", month.toString())
+//        Log.d("year", year.toString())
 
         if (year != yearLatest) {
             val result = yearLatest - year
@@ -151,8 +163,8 @@ class EditActivity : AppCompatActivity() {
             val re = abs(result)
             return "$re 時間前"
 
-        } else if (date != dateLatest) {
-            val calcResult = date - dateLatest
+        } else  {
+            val calcResult = min - minLatest
             val re = Math.abs(calcResult)
             return "$re 分前"
         }
@@ -191,7 +203,8 @@ class EditActivity : AppCompatActivity() {
         month: Int,
         date: Int,
         hour: Int,
-        min: Int, time: String
+        min: Int,
+        time: String
     ) {
         realm.executeTransaction {
 
@@ -205,7 +218,7 @@ class EditActivity : AppCompatActivity() {
             book.date = date
             book.hour = hour
             book.min = min
-            book.time = time
+            book.time = time.toString()
         }
     }
 
