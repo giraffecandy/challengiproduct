@@ -1,8 +1,10 @@
 package com.lifeistech.l4s.challengeproduct
 
+import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -12,8 +14,6 @@ import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import kotlin.math.abs
-import kotlin.math.truncate
 
 
 class MainActivity : AppCompatActivity() {
@@ -65,23 +65,85 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-        val adapter = RecyclerViewAdapter(
-            this,
-            bookList,
-            true,
-            object : RecyclerViewAdapter.OnItemClickListener {
-                override fun onItemClick(item: Book) {
+//        val time = "hello"
 
-                    val intent = Intent(application, DetailActivity::class.java)
-                    intent.putExtra("GO_DETAIL", item.id)
-                    startActivity(intent)
-                }
-            })
+//        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+//        sdf.setTimeZone(TimeZone.getTimeZone("GMT+9"))
+//        try {
+//            val time: Long = sdf.parse("2016-01-24T16:00:00.000Z").getTime()
+//            val now = System.currentTimeMillis()
+//            val ago =
+//                DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
+//        } catch (e: ParseException) {
+//            e.printStackTrace()
+//        }
 
-        recyclerView.layoutManager = GridLayoutManager(this, 3)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
+        val AVERAGE_MONTH_IN_MILLIS:Long= DateUtils.DAY_IN_MILLIS * 30
 
+        fun timeidk(time: Long): String {
+            val now: Long = Date().getTime()
+            val delta: Long = now - time
+            val resolution: Long
+            if (delta <= DateUtils.MINUTE_IN_MILLIS) {
+                resolution = DateUtils.SECOND_IN_MILLIS;
+                Log.d("re", resolution.toString())
+            } else if (delta <= DateUtils.HOUR_IN_MILLIS) {
+                resolution = DateUtils.MINUTE_IN_MILLIS;
+            } else if (delta <= DateUtils.DAY_IN_MILLIS) {
+                resolution = DateUtils.HOUR_IN_MILLIS;
+            } else if (delta <= DateUtils.WEEK_IN_MILLIS) {
+                resolution = DateUtils.DAY_IN_MILLIS;
+            } else if (delta <= AVERAGE_MONTH_IN_MILLIS) {
+                val calc = delta / DateUtils.WEEK_IN_MILLIS
+                val Integer: String =" $calc 週間前"
+                return Integer
+            } else if (delta <= DateUtils.YEAR_IN_MILLIS) {
+                val calc = delta / AVERAGE_MONTH_IN_MILLIS
+                val Integer: String = "$calc　か月前"
+                return Integer
+            } else {
+                val calc = delta / DateUtils.YEAR_IN_MILLIS
+                val Integer: String = "$calc　年前"
+                return Integer
+            }
+            return DateUtils.getRelativeTimeSpanString(time, now, resolution).toString();
+        }
+
+//        class Se (book: Book){
+//            val search = book.id
+//        }
+
+        val items: RealmResults<Book> =
+            realm.where(Book::class.java).findAll()
+        for (i in items) {
+//            addText(i.getId().toString() + ":" + i.getName())
+            val time = timeidk(i.createdAt.time)
+
+
+//        fun main() {
+//            val dhu: Se = Se()
+//            var gettimeid = realm.where(Book::class.java).equalTo("id", id).findAll()
+//            var getTimeR = realm.where(Book::class.java).e
+//            val time = timeidk(dhu.Se)
+//        }
+            val adapter = RecyclerViewAdapter(
+                this,
+                bookList,
+                time,
+                true,
+                object : RecyclerViewAdapter.OnItemClickListener {
+                    override fun onItemClick(item: Book) {
+
+                        val intent = Intent(application, DetailActivity::class.java)
+                        intent.putExtra("GO_DETAIL", item.id)
+                        startActivity(intent)
+                    }
+                })
+
+            recyclerView.layoutManager = GridLayoutManager(this, 3)
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = adapter
+        }
 //        adapter.addAll(bookList)
 
         floatingActionButton.setOnClickListener {
