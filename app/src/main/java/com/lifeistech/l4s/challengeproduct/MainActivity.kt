@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         for (i in items) {
 //            addText(i.getId().toString() + ":" + i.getName())
             val time = timeidk(i.createdAt.time)
-
+        }
 
 //        fun main() {
 //            val dhu: Se = Se()
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             val adapter = RecyclerViewAdapter(
                 this,
                 bookList,
-                time,
+//                time,
                 true,
                 object : RecyclerViewAdapter.OnItemClickListener {
                     override fun onItemClick(item: Book) {
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             recyclerView.layoutManager = GridLayoutManager(this, 3)
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
-        }
+
 //        adapter.addAll(bookList)
 
         floatingActionButton.setOnClickListener {
@@ -151,9 +151,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val results = realm.where(Book::class.java).findAll()
-        val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
-        Log.d("hoge", results.toString())
+//        val results = realm.where(Book::class.java).findAll()
+//        val numberOfItems: MutableList<Book> = results.subList(0, bookList.size)
+//        Log.d("hoge", results.toString())
 
 
 //        val saveDate = realm.where(Book::class.java).findFirst()

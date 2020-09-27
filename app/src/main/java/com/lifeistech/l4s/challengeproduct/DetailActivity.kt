@@ -37,6 +37,8 @@ class DetailActivity : AppCompatActivity() {
         descriptionEditTextView.text = selectedData?.description
         val getId = selectedData?.id
 
+        val titleForMessage = selectedData?.title
+
         editButton.setOnClickListener {
 
 //            fun editOnItemClick(item: Book) {
@@ -50,8 +52,8 @@ class DetailActivity : AppCompatActivity() {
         deleteButton.setOnClickListener {
 
             AlertDialog.Builder(mContext)
-                .setTitle("title")
-                .setMessage("message")
+                .setTitle("本の削除")
+                .setMessage("$titleForMessage　を削除しますか？")
                 .setPositiveButton("OK",
                     DialogInterface.OnClickListener { dialog, which ->
                         // OK button pressed
