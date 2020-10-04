@@ -37,6 +37,7 @@
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="4dp"
             android:ems="10"
             android:gravity="start"
             android:hint="説明"
@@ -65,6 +66,7 @@
             android:id="@+id/titleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:ems="10"
             android:hint="タイトル"
             android:inputType="textPersonName" />
@@ -89,6 +91,7 @@
             android:id="@+id/autherEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:ems="10"
             android:hint="著者名"
             android:inputType="textPersonName" />
@@ -111,6 +114,7 @@
             android:id="@+id/priceEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:ems="10"
             android:hint="金額"
             android:inputType="number" />

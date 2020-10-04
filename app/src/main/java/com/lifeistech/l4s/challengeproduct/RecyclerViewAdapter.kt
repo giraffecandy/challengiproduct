@@ -16,27 +16,11 @@ import kotlinx.android.synthetic.main.item_book_data_cell.view.*
 class RecyclerViewAdapter(
     private val context: Context,
     private var bookList: OrderedRealmCollection<Book>,
-    private val time:Book,
+//    private val time:Book,
     private val autoUpdate: Boolean,
     private var listener: OnItemClickListener
 //    private val book: Long
 ) : RealmRecyclerViewAdapter<Book, RecyclerViewAdapter.ViewHolder>(bookList, autoUpdate) {
-
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-        val autherTextView: TextView = view.findViewById(R.id.autherTextView)
-        val timeTextView: TextView = view.findViewById(R.id.timeTextView)
-        val container: LinearLayout = view.container
-
-        fun bind(book: Book){
-            titleTextView.text = view.title
-            holder.autherTextView.text = item.auther
-            holder.timeTextView.text = DateUtils.getRelativeTimeSpanString(
-                book.createdAt.time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS
-            ).toString()
-        }
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 //setOnClickListenerはレイアウトを適用する場所を決める
@@ -44,24 +28,36 @@ class RecyclerViewAdapter(
         val view: View = LayoutInflater.from(context)
             .inflate(R.layout.item_book_data_cell, parent, false)
 
-
-        return ViewHolder(view)
-
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int = bookList?.size ?: 0
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Book = bookList?.get(position) ?: return
-        holder.bind(book)
-
-
-        holder.container.setOnClickListener {
-            listener.onItemClick(item)
-        }
-
+        val book: Book = bookList?.get(position) ?: return
+        holder.bind(book, listener)
     }
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val titleTextView: TextView = view.findViewById(R.id.titleTextView)
+        private val autherTextView: TextView = view.findViewById(R.id.autherTextView)
+        private val timeTextView: TextView = view.findViewById(R.id.timeTextView)
+        private val container: LinearLayout = view.container
+
+        fun bind(book: Book, listener: OnItemClickListener){
+            titleTextView.text = book.title
+            autherTextView.text = book.auther
+            timeTextView.text = DateUtils.getRelativeTimeSpanString(
+                book.createdAt.time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS
+            ).toString()
+
+            container.setOnClickListener {
+                listener.onItemClick(book)
+            }
+        }
+    }
+
 
     interface OnItemClickListener {
         fun onItemClick(item: Book)

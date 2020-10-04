@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = RecyclerViewAdapter(
             this,
             bookList,
-            time,
+//            time,
             true,
             object : RecyclerViewAdapter.OnItemClickListener {
                 override fun onItemClick(item: Book) {
