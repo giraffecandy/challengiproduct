@@ -12,7 +12,15 @@
     </style>
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="colorControlActivated">#FFC107</item>
+        <item name="colorControlActivated">#FFCC00</item>
+    </style>
+
+    <style name="Sample.InputLayout.Activate" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">#FFCC00</item>
+    </style>
+
+    <style name="EditText.Filled" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="hintTextAppearance">@style/Sample.InputLayout.Activate</item>
     </style>
 
 </resources>
