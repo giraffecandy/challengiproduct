@@ -34,11 +34,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        toolbar3.title = "BookShelf"
+
         mContext = this
         val bookList: RealmResults<Book> = readAll()
         Log.d("content", bookList.toString())
 
-        val AVERAGE_MONTH_IN_MILLIS: Long = DateUtils.DAY_IN_MILLIS * 30
+//        val AVERAGE_MONTH_IN_MILLIS: Long = DateUtils.DAY_IN_MILLIS * 30
 
 //        fun times(time: Long): String {
 //            val now: Long = Date().getTime()
