@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 
@@ -18,16 +19,16 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        val book: Book? = read()
+//        val book: Book? = read()
 
         val acceptData: String = intent.getStringExtra("GO_EDIT").toString()
 
         var getId: Book? = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
 
-        Log.d("accept", acceptData.toString())
+        Log.d("accept", acceptData)
 
         titleEditText.setText(getId?.title)
-        autherEditText.setText(getId?.auther)
+        autherEditText.setText(getId?.author)
         priceEditText.setText(getId?.price.toString())
         descriptionEditText.setText(getId?.description)
 
@@ -35,7 +36,7 @@ class EditActivity : AppCompatActivity() {
         Log.d("accept", acceptData.toString())
 
         titleEditText.setText(getId?.title)
-        autherEditText.setText(getId?.auther)
+        autherEditText.setText(getId?.author)
         priceEditText.setText(getId?.price.toString())
         descriptionEditText.setText(getId?.description)
 
@@ -63,13 +64,12 @@ class EditActivity : AppCompatActivity() {
                         var price: String = priceEditText.text.toString()
 
                         getId.title = title
-                        getId.auther = auther
+                        getId.author = auther
                         getId.description = description
                         getId.price = price.toInt()
 
                     }
                 }
-
 
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
@@ -94,9 +94,9 @@ class EditActivity : AppCompatActivity() {
         return realm.where(Book::class.java).findFirst()
     }
 
-    fun save(
+    private fun save(
         title: String,
-        auther: String,
+        author: String,
         description: String,
         price: String
     ) {
@@ -104,7 +104,7 @@ class EditActivity : AppCompatActivity() {
 
             val book = it.createObject(Book::class.java, UUID.randomUUID().toString())
             book.title = title
-            book.auther = auther
+            book.author = author
             book.description = description
             book.price = price.toInt()
 

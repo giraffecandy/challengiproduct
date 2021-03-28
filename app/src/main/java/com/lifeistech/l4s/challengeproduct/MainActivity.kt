@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             return times
         }
 
-        val time = book()
+//        val time = book()
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.setHasFixedSize(true)
 
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 
 
-        val forSkip = book()
+//        val forSkip = book()
         floatingActionButton.setOnClickListener {
             val intent = Intent(application, EditActivity::class.java)
             startActivity(intent)

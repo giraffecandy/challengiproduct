@@ -47,7 +47,7 @@ class RecyclerViewAdapter(
 
         fun bind(book: Book, listener: OnItemClickListener){
             titleTextView.text = book.title
-            autherTextView.text = book.auther
+            autherTextView.text = book.author
             timeTextView.text = DateUtils.getRelativeTimeSpanString(
                 book.createdAt.time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS
             ).toString()

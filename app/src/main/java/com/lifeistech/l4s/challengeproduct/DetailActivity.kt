@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity() {
         var selectedData = realm.where(Book::class.java).equalTo("id", acceptData).findFirst()
         Log.d("selectd", selectedData.toString())
         titleEditTextView.text = selectedData?.title
-        autherEditTextView.text = selectedData?.auther
+        authorEditTextView.text = selectedData?.author
         priceEditTextView.text = selectedData?.price.toString()
         descriptionEditTextView.text = selectedData?.description
         val getId = selectedData?.id
